@@ -11,6 +11,14 @@
   <script src="test.js"></script>
 </head>
 <body>
+<p>Create function <pre>function sum() { /* ... */ }</pre></p>
+<pre>
+  var s = sum();
+  alert(s); // 0
+  alert(s(1)); // 1
+  alert(s(1)(2)); //3
+  alert(s(3)(4)(5)); // 12
+</pre>
 <div id="qunit"></div>
 <div id="qunit-fixture">this had better work.</div>
 </body>

@@ -57,3 +57,12 @@ test('it save result on calling with no param', function() {
   equal(+sum(5)(6)(), +sum(5)(6), 'should keep result');
   equal(+sum(5)(6)()()(), +sum(5)(6), 'should keep result');
 });
+
+test('initial tests', function() {
+  expect(4);
+  var s = sum();
+  equal(s, 0, ' alert(s); // 0');
+  equal(s(1), 1, ' alert(s(1)); // 1');
+  equal(s(1)(2), 3, 'alert(s(1)(2)); //3');
+  equal(s(3)(4)(5), 12, ' alert(s(3)(4)(5)); // 12');
+});
