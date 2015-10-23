@@ -1,0 +1,22 @@
+{
+  "name": "js--upsjs",
+  "version": "0.0.0",
+  "authors": [
+    "Vasil Vanchuk <v.vanchuk@tut.by>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "qunit": "~1.19.0"
+  }
+}
