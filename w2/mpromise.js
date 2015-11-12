@@ -1,10 +1,11 @@
 var MPromise = function(callback) {
+  var status = 'pending';
   var resolve = function() {
-
+    status = 'fulfilled';
   };
 
   var reject = function() {
-
+    status = 'rejected';
   };
 
   if(typeof callback === 'function') {
@@ -14,6 +15,8 @@ var MPromise = function(callback) {
   return {
     then: function() {},
     catch: function() {},
-    getState: function() {}
+    getState: function() {
+      return status;
+    }
   }
 };
