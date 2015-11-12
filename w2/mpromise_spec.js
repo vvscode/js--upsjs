@@ -134,5 +134,30 @@ test('promise .then return new promise', function() {
   p.then(function(data) {
     equal(data, 5, '.then result get new value');
   });
+});
 
+test('promise call catch callback on reject', function() {
+  var data = {};
+  new MPromise(function(resolve, reject){
+    reject(data);
+  }).catch(function(err) {
+    equal(err, data, 'promise pass reject data to .catch')
+  });
+});
+
+test('promise do not bubble errors from callbacks', function() {
+  new MPromise(function() {
+    throw 'Some error';
+  });
+  ok(true, 'No errors found');
+
+  new MPromise(function(resolve){ resolve(3); }).then(function() {
+    throw 'Some another error';
+  });
+  ok(true, 'No errors found');
+
+  new MPromise(function(resolve, reject){ reject(3); }).then(function() {
+    throw 'Some another error';
+  });
+  ok(true, 'No errors found');
 });

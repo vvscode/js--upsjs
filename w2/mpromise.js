@@ -7,44 +7,65 @@
     var status = 'pending';
 
     var resolve = function(data) {
-      if(status !== 'pending') {
+      if (status !== 'pending') {
         return;
       }
       value = data;
       status = 'fulfilled';
       onResolvedHandlers.forEach(function(onResolved) {
-        onResolved.call(null, value);
+        try {
+          onResolved.call(null, value);
+        } catch (e) {
+
+        }
       });
     };
 
     var reject = function(data) {
-      if(status !== 'pending') {
+      if (status !== 'pending') {
         return;
       }
       error = data;
       status = 'rejected';
       onRejectedHandlers.forEach(function(onRejected) {
-        onRejected.call(null, error);
+        try {
+          onRejected.call(null, error);
+        } catch (e) {
+
+        }
       });
     };
 
     if (typeof callback === 'function') {
-      callback(resolve, reject);
+      try {
+        callback(resolve, reject);
+      } catch (e) {
+        error = e;
+        reject(e);
+      }
     }
 
     return {
       then: function(onResolved, onRejected) {
-        if(typeof onResolved === 'function') {
-          if(status === 'fulfilled') {
-            onResolved.call(null, value);
-          } else if(status === 'pending') {
+        if (typeof onResolved === 'function') {
+          if (status === 'fulfilled') {
+            try {
+              onResolved.call(null, value);
+            } catch (e) {
+
+            }
+          } else if (status === 'pending') {
             onResolvedHandlers.push(onResolved);
           }
         }
-        if(typeof onRejected === 'function') {
-          if(status === 'rejected') {
-            onRejected.call(null, error);
-          } else if(status === 'pending') {
+        if (typeof onRejected === 'function') {
+          if (status === 'rejected') {
+            try {
+              onRejected.call(null, error);
+            } catch (e) {
+
+            }
+          } else if (status === 'pending') {
             onRejectedHandlers.push(onRejected);
           }
         }
@@ -55,7 +76,7 @@
         });
       },
       catch: function(onRejected) {
-
+        return this.then(null, onRejected);
       },
       getState: function() {
         return status;
