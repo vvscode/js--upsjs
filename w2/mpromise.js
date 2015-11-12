@@ -1,14 +1,14 @@
 var MPromise = function(callback) {
-  var onRejected = function() {
+  var resolve = function() {
 
   };
 
-  var onFulfilled = function() {
+  var reject = function() {
 
   };
 
   if(typeof callback === 'function') {
-    callback(onFulfilled, onRejected);
+    callback(resolve, reject);
   }
 
   return {

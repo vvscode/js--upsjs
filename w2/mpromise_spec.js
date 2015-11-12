@@ -15,8 +15,8 @@ test('“promise” is an object or function with a .then/.catch method', functi
 test('"promise" callback get two params ( functions )', function() {
   expect(2);
 
-  new MPromise(function(onFulfilled, onRejected) {
-    equal(typeof onFulfilled, 'function', 'promise pass onFulfilled callback');
-    equal(typeof onRejected, 'function', 'promise pass onRejected callback');
+  new MPromise(function(resolve, reject) {
+    equal(typeof resolve, 'function', 'promise pass onFulfilled callback');
+    equal(typeof reject, 'function', 'promise pass onRejected callback');
   });
 });
