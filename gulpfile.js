@@ -2,7 +2,7 @@ var gulp = require('gulp'),
   qunit = require('node-qunit-phantomjs');
 
 gulp.task('test', function() {
-  qunit('./w1/index.html');
+  qunit('./w2/index.html');
 });
 
 gulp.task('watch', function() {
