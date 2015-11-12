@@ -6,10 +6,11 @@
     var onRejectedHandlers = [];
     var status = 'pending';
 
-    var resolve = function() {
+    var resolve = function(data) {
       if(status !== 'pending') {
         return;
       }
+      value = data;
       status = 'fulfilled';
       onResolvedHandlers.forEach(function(onResolved) {
         onResolved.call(null, value);

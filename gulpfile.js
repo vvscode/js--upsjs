@@ -9,4 +9,4 @@ gulp.task('watch', function() {
   gulp.watch('*/**', ['test']);
 });
 
-gulp.task('default', ['watch', 'test']);
+gulp.task('default', ['watch']);

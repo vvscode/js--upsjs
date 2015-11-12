@@ -102,3 +102,12 @@ test('promise call then callbacks if promise alredy change state', function() {
   ok(spy1.calledOnce, '.then do not call onFullfilled callback after reject');
   ok(spy2.calledOnce, '.then call onRejected callback after reject');
 });
+
+test('promise pass resolve data to onFullfilled callback', function() {
+  var data = {};
+  new MPromise(function(resolve) {
+    resolve(data);
+  }).then(function(resp) {
+    equal(resp, data, 'promise should pass resolve data to then');
+  });
+});
