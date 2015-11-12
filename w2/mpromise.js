@@ -48,6 +48,11 @@
             onRejectedHandlers.push(onRejected);
           }
         }
+
+        return new MPromise(function(resolve, reject) {
+          onResolvedHandlers.push(resolve);
+          onRejectedHandlers.push(reject);
+        });
       },
       catch: function(onRejected) {
 

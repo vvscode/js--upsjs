@@ -120,3 +120,19 @@ test('promise pass reject data to onRejected callback', function() {
     equal(resp, data, 'promise should pass reject data to then');
   });
 });
+
+test('promise .then return new promise', function() {
+  var p = new MPromise(function(resolve){
+    resolve(3);
+  }).then(function() {
+    return 5;
+  });
+
+  equal(typeof p.then, 'function', '.then result has .then method');
+  equal(typeof p.catch, 'function', '.then result has .catch method');
+
+  p.then(function(data) {
+    equal(data, 5, '.then result get new value');
+  });
+
+});
