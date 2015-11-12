@@ -76,10 +76,10 @@
           if(status === 'fulfilled') {
             resolve(typeof onResolved === 'function'? onResolved(value): undefined);
           } else if (status === 'rejected') {
-            reject(typeof onRejected === 'function'? onRejected(error): undefined);
+            reject(typeof onRejected === 'function'? onRejected(error): error);
           } else {
             onRejectedHandlers.push(function(data) {
-              reject(typeof onRejected === 'function'? onRejected(error): undefined);
+              reject(typeof onRejected === 'function'? onRejected(error): error);
             });
             onResolvedHandlers.push(function(data) {
               resolve(typeof onResolved === 'function'? onResolved(value): undefined);

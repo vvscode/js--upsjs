@@ -188,3 +188,21 @@ test('on fail at then promise run catch', function() {
     equal(data, 'Some error', 'It pass error to catch');
   });
 });
+
+test('pass error throw promises', function() {
+  new MPromise(function(resolve) {
+    resolve(2);
+  }).then(function() {
+    return 2;
+  }).then(function() {
+    return 3;
+  }).then(function(data){
+    equal(data, 3, 'It get previous .then value');
+    throw 'Some error';
+  }).then(function(){
+    return 4;
+  }).catch(function(data) {
+    equal(true, true, 'Catch was called');
+    equal(data, 'Some error', 'It pass error to catch');
+  });
+});
