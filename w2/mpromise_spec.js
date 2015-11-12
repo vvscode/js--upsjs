@@ -161,3 +161,44 @@ test('promise do not bubble errors from callbacks', function() {
   });
   ok(true, 'No errors found');
 });
+
+test('promise then pass returned value to next promise', function() {
+  expect(2);
+  new MPromise(function(resolve) {
+    resolve(2);
+  }).then(function() {
+    return 3;
+  }).then(function(data){
+    equal(data, 3, 'Then get presious promise result');
+    return 5;
+  }).then(function(data) {
+    equal(data, 5, 'Then get presious promise result');
+  });
+});
+
+//test('on fail at then promise run catch', function() {
+//  expect(5);
+//
+//  new MPromise(function(resolve) {
+//    throw 'Some error'
+//  }).catch(function(data) {
+//    equal(true, true, 'Catch was called');
+//    equal(data, 'Some error', 'It pass error to catch');
+//  });
+//
+//  new MPromise(function(resolve) {
+//    resolve(2);
+//  }).then(function() {
+//    return 3;
+//  }).then(function(data){
+//    equal(data, 3, 'Then get presious promise result');
+//    return 5;
+//  }).then(function() {
+//    equal(data, 5, 'Then get presious promise result');
+//    throw  'Some another error';
+//  }).then(function() {
+//    return 5;
+//  }).catch(function() {
+//    equal(true, true, 'catch was runned');
+//  });
+//});

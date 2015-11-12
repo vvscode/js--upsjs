@@ -16,7 +16,7 @@
         try {
           onResolved.call(null, value);
         } catch (e) {
-
+          console.error(e);
         }
       });
     };
@@ -31,7 +31,7 @@
         try {
           onRejected.call(null, error);
         } catch (e) {
-
+          console.error(e);
         }
       });
     };
@@ -52,7 +52,7 @@
             try {
               onResolved.call(null, value);
             } catch (e) {
-
+              console.error(e);
             }
           } else if (status === 'pending') {
             onResolvedHandlers.push(onResolved);
@@ -63,16 +63,28 @@
             try {
               onRejected.call(null, error);
             } catch (e) {
-
+              console.error(e);
             }
           } else if (status === 'pending') {
             onRejectedHandlers.push(onRejected);
           }
         }
 
+        var that = this;
+        var status = this.getState();
         return new MPromise(function(resolve, reject) {
-          onResolvedHandlers.push(resolve);
-          onRejectedHandlers.push(reject);
+          if(status === 'fulfilled') {
+            resolve(typeof onResolved === 'function'? onResolved(value): undefined);
+          } else if (status === 'rejected') {
+            reject(typeof onRejected === 'function'? onRejected(error): undefined);
+          } else {
+            onRejectedHandlers.push(function(data) {
+              reject(typeof onRejected === 'function'? onRejected(error): undefined);
+            });
+            onResolvedHandlers.push(function(data) {
+              resolve(typeof onResolved === 'function'? onResolved(value): undefined);
+            });
+          }
         });
       },
       catch: function(onRejected) {
