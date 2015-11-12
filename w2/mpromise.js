@@ -33,10 +33,18 @@
     return {
       then: function(onResolved, onRejected) {
         if(typeof onResolved === 'function') {
-          onResolvedHandlers.push(onResolved);
+          if(status === 'fulfilled') {
+            onResolved.call(null, value);
+          } else if(status === 'pending') {
+            onResolvedHandlers.push(onResolved);
+          }
         }
         if(typeof onRejected === 'function') {
-          onRejectedHandlers.push(onRejected);
+          if(status === 'rejected') {
+            onRejected.call(null, error);
+          } else if(status === 'pending') {
+            onRejectedHandlers.push(onRejected);
+          }
         }
       },
       catch: function(onRejected) {

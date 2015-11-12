@@ -86,3 +86,19 @@ test('promise call then callback on resolve/reject', function() {
   ok(spy1.calledOnce, '.then do not call onFullfilled callback after reject');
   ok(spy2.calledOnce, '.then call onRejected callback after reject');
 });
+
+
+test('promise call then callbacks if promise alredy change state', function() {
+  var spy1 = this.spy();
+  new MPromise(function(resolve, reject){
+    resolve();
+  }).then(spy1);
+  ok(spy1.calledOnce, '.then call onFullfilled callback after resolve');
+
+  var spy2 = this.spy();
+  new MPromise(function(resolve, reject){
+    reject();
+  }).then(spy1, spy2);
+  ok(spy1.calledOnce, '.then do not call onFullfilled callback after reject');
+  ok(spy2.calledOnce, '.then call onRejected callback after reject');
+});
