@@ -67,5 +67,22 @@ test('promise change state only once', function(assert) {
   equal(p2.getState(), 'rejected', '"rejected" is status on reject');
   resolver();
   equal(p2.getState(), 'rejected', '"rejected" do not changed to "fulfilled" on resolve');
+});
 
+test('promise call then callback on resolve/reject', function() {
+  var resolver, rejecter;
+  var spy1 = this.spy();
+  new MPromise(function(resolve, reject){
+    resolver = resolve;
+  }).then(spy1);
+  resolver();
+  ok(spy1.calledOnce, '.then call onFullfilled callback after resolve');
+
+  var spy2 = this.spy();
+  new MPromise(function(resolve, reject){
+    rejecter = reject;
+  }).then(spy1, spy2);
+  rejecter();
+  ok(spy1.calledOnce, '.then do not call onFullfilled callback after reject');
+  ok(spy2.calledOnce, '.then call onRejected callback after reject');
 });

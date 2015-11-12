@@ -1,5 +1,9 @@
 (function(window) {
   var MPromise = function(callback) {
+    var value;
+    var error;
+    var onResolvedHandlers = [];
+    var onRejectedHandlers = [];
     var status = 'pending';
 
     var resolve = function() {
@@ -7,6 +11,9 @@
         return;
       }
       status = 'fulfilled';
+      onResolvedHandlers.forEach(function(onResolved) {
+        onResolved.call(null, value);
+      });
     };
 
     var reject = function() {
@@ -14,6 +21,9 @@
         return;
       }
       status = 'rejected';
+      onRejectedHandlers.forEach(function(onRejected) {
+        onRejected.call(null, error);
+      });
     };
 
     if (typeof callback === 'function') {
@@ -21,9 +31,16 @@
     }
 
     return {
-      then: function() {
+      then: function(onResolved, onRejected) {
+        if(typeof onResolved === 'function') {
+          onResolvedHandlers.push(onResolved);
+        }
+        if(typeof onRejected === 'function') {
+          onRejectedHandlers.push(onRejected);
+        }
       },
-      catch: function() {
+      catch: function(onRejected) {
+
       },
       getState: function() {
         return status;
