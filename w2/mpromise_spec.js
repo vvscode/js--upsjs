@@ -190,6 +190,8 @@ test('on fail at then promise run catch', function() {
 });
 
 test('pass error throw promises', function() {
+  expect(3);
+
   new MPromise(function(resolve) {
     resolve(2);
   }).then(function() {
@@ -204,5 +206,15 @@ test('pass error throw promises', function() {
   }).catch(function(data) {
     equal(true, true, 'Catch was called');
     equal(data, 'Some error', 'It pass error to catch');
+  });
+});
+
+test('It don\'t change value on resolve', function() {
+  expect(1);
+  new MPromise(function(resolve) {
+    resolve(1);
+    resolve(2);
+  }).then(function(data){
+    equal(data, 1, 'get value from first resolve');
   });
 });
