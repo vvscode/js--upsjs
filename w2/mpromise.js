@@ -17,10 +17,11 @@
       });
     };
 
-    var reject = function() {
+    var reject = function(data) {
       if(status !== 'pending') {
         return;
       }
+      error = data;
       status = 'rejected';
       onRejectedHandlers.forEach(function(onRejected) {
         onRejected.call(null, error);

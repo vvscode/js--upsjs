@@ -111,3 +111,12 @@ test('promise pass resolve data to onFullfilled callback', function() {
     equal(resp, data, 'promise should pass resolve data to then');
   });
 });
+
+test('promise pass reject data to onRejected callback', function() {
+  var data = {};
+  new MPromise(function(resolve, reject) {
+    reject(data);
+  }).then(null, function(resp) {
+    equal(resp, data, 'promise should pass reject data to then');
+  });
+});
