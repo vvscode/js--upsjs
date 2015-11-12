@@ -13,6 +13,7 @@ var MPromise = function(callback) {
 
   return {
     then: function() {},
-    catch: function() {}
+    catch: function() {},
+    getState: function() {}
   }
 };

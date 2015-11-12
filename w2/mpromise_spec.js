@@ -4,12 +4,13 @@ module( "MPromise", {
   }
 });
 
-test('“promise” is an object or function with a .then/.catch method', function() {
-  expect(2);
+test('“promise” is an object or function with a .then/.catch/.getState method', function() {
+  expect(3);
 
   var p = new MPromise();
   equal(typeof p.then, 'function', 'promise has .then methos');
-  equal(typeof p.catch, 'function', 'promise has .then methos');
+  equal(typeof p.catch, 'function', 'promise has .catch methos');
+  equal(typeof p.getState, 'function', 'promise has .getState methos');
 });
 
 test('"promise" callback get two params ( functions )', function() {
