@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UpsJS - 1 </title>
+  <!-- Load local QUnit. -->
+  <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css" media="screen">
+  <script src="../bower_components/qunit/qunit/qunit.js"></script>
+  <script src="../bower_components/sinon-1.17.1/index.js"></script>
+  <script src="../bower_components/sinon-qunit/lib/sinon-qunit.js"></script>
+  <!-- Load local lib and tests. -->
+  <script src="mpromise.js"></script>
+  <script src="mpromise_spec.js"></script>
+</head>
+<body>
+<p>Создать реализацию Promise. Полностью покрывать спецификацию не нужно. Должна быть подписка на resolve / reject, chain promise, обработка исключений в обработчиках. Дополнительно реализовать .hash / .all для групповой обработки промисов. Функция для создания deferred объектов -- MPromise ( это важно -- после вы будете тестировать свой код тестами коллег )</p>
+
+<p>
+  Сигнатуры:
+<pre>var p = new MPromise(function(resolve, reject){ /*...*/});
+p.then(onResolve, onReject); // both a optional, return new promise object
+p.catch(onReject); // call on reject/on fail at handler</pre>
+</p>
+<p>Покрыть код тестами Qunit ( разнести тесты и код по разным файлам, чтобы тесты можно было подключать отдельно к любой реализации ). Код пишем по TDD:
+<ol>
+  <li>пишем тест который не проходит</li>
+  <li>пишем код чтобы тест прошел</li>
+  <li>улучшаем код</li>
+  <li>goto п1.</li>
+</ol>
+Написать минимум 20 тестов</p>
+<div id="qunit"></div>
+<div id="qunit-fixture">this had better work.</div>
+</body>
+</html>

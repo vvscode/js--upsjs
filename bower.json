@@ -17,6 +17,8 @@
     "tests"
   ],
   "dependencies": {
-    "qunit": "~1.19.0"
+    "qunit": "~1.19.0",
+    "sinon-qunit": "~2.0.0",
+    "sinon-1.17.1": "http://sinonjs.org/releases/sinon-1.17.1.js"
   }
 }
