@@ -1,22 +1,35 @@
-var MPromise = function(callback) {
-  var status = 'pending';
-  var resolve = function() {
-    status = 'fulfilled';
-  };
+(function(window) {
+  var MPromise = function(callback) {
+    var status = 'pending';
 
-  var reject = function() {
-    status = 'rejected';
-  };
+    var resolve = function() {
+      if(status !== 'pending') {
+        return;
+      }
+      status = 'fulfilled';
+    };
 
-  if(typeof callback === 'function') {
-    callback(resolve, reject);
-  }
+    var reject = function() {
+      if(status !== 'pending') {
+        return;
+      }
+      status = 'rejected';
+    };
 
-  return {
-    then: function() {},
-    catch: function() {},
-    getState: function() {
-      return status;
+    if (typeof callback === 'function') {
+      callback(resolve, reject);
     }
-  }
-};
+
+    return {
+      then: function() {
+      },
+      catch: function() {
+      },
+      getState: function() {
+        return status;
+      }
+    }
+  };
+
+  window.MPromise = MPromise;
+})(window);

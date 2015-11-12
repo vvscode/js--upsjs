@@ -43,3 +43,29 @@ test('promise has default state (pending) and change it on resolve(fulfilled)/re
     done2();
   }, 0);
 });
+
+test('promise change state only once', function(assert) {
+  expect(6);
+  var resolver, rejecter;
+  var p1 = new MPromise(function(resolve, reject) {
+    resolver = resolve;
+    rejecter = reject;
+  });
+  equal(p1.getState(), 'pending', '"pending" is default status');
+  resolver();
+  equal(p1.getState(), 'fulfilled', '"fulfilled" is status on resolve');
+  rejecter();
+  equal(p1.getState(), 'fulfilled', '"fulfilled" do not changed to "rejected" on reject');
+
+
+  var p2 = new MPromise(function(resolve, reject) {
+    resolver = resolve;
+    rejecter = reject;
+  });
+  equal(p2.getState(), 'pending', '"pending" is default status');
+  rejecter();
+  equal(p2.getState(), 'rejected', '"rejected" is status on reject');
+  resolver();
+  equal(p2.getState(), 'rejected', '"rejected" do not changed to "fulfilled" on resolve');
+
+});
