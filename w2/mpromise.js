@@ -47,6 +47,8 @@
 
     return {
       then: function(onResolved, onRejected) {
+        var rejectedVal;
+        var rejectedError;
         if (typeof onResolved === 'function') {
           if (status === 'fulfilled') {
             try {
@@ -61,8 +63,9 @@
         if (typeof onRejected === 'function') {
           if (status === 'rejected') {
             try {
-              onRejected.call(null, error);
+              rejectedVal = onRejected.call(null, error);
             } catch (e) {
+              rejectedError = e;
               console.error(e);
             }
           } else if (status === 'pending') {

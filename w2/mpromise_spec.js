@@ -218,3 +218,16 @@ test('It don\'t change value on resolve', function() {
     equal(data, 1, 'get value from first resolve');
   });
 });
+
+test('.catch return resolved promise', function() {
+  expect(1);
+  new MPromise(function(resolve){
+    resolve();
+  }).then(function() {
+    throw 'Some error';
+  }).catch(function() {
+    return 3;
+  }).then(function(data){
+    equal(data, 3, '.catch should return normal promise');
+  })
+});
